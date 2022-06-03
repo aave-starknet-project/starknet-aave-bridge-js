@@ -1,0 +1,321 @@
+{
+  "address": "65564564564",
+  "abi": [
+    {
+      "members": [
+        {
+          "name": "low",
+          "offset": 0,
+          "type": "felt"
+        },
+        {
+          "name": "high",
+          "offset": 1,
+          "type": "felt"
+        }
+      ],
+      "name": "Uint256",
+      "size": 2,
+      "type": "struct"
+    },
+    {
+      "data": [
+        {
+          "name": "l2_token",
+          "type": "felt"
+        },
+        {
+          "name": "l1_recipient",
+          "type": "felt"
+        },
+        {
+          "name": "amount",
+          "type": "Uint256"
+        },
+        {
+          "name": "caller",
+          "type": "felt"
+        },
+        {
+          "name": "current_rewards_index",
+          "type": "Uint256"
+        }
+      ],
+      "keys": [],
+      "name": "withdraw_initiated",
+      "type": "event"
+    },
+    {
+      "data": [
+        {
+          "name": "l2_token",
+          "type": "felt"
+        },
+        {
+          "name": "l1_sender",
+          "type": "felt"
+        },
+        {
+          "name": "account",
+          "type": "felt"
+        },
+        {
+          "name": "amount",
+          "type": "Uint256"
+        },
+        {
+          "name": "block_number",
+          "type": "Uint256"
+        },
+        {
+          "name": "l1_rewards_index",
+          "type": "Uint256"
+        }
+      ],
+      "keys": [],
+      "name": "deposit_handled",
+      "type": "event"
+    },
+    {
+      "data": [
+        {
+          "name": "l2_reward_token",
+          "type": "felt"
+        },
+        {
+          "name": "account",
+          "type": "felt"
+        },
+        {
+          "name": "amount",
+          "type": "Uint256"
+        }
+      ],
+      "keys": [],
+      "name": "minted_rewards",
+      "type": "event"
+    },
+    {
+      "data": [
+        {
+          "name": "caller",
+          "type": "felt"
+        },
+        {
+          "name": "l1_recipient",
+          "type": "felt"
+        },
+        {
+          "name": "amount",
+          "type": "Uint256"
+        }
+      ],
+      "keys": [],
+      "name": "bridged_rewards",
+      "type": "event"
+    },
+    {
+      "inputs": [],
+      "name": "get_governor",
+      "outputs": [
+        {
+          "name": "res",
+          "type": "felt"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "get_l1_bridge",
+      "outputs": [
+        {
+          "name": "res",
+          "type": "felt"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "name": "governor_address",
+          "type": "felt"
+        }
+      ],
+      "name": "initialize_bridge",
+      "outputs": [],
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "name": "l1_bridge_address",
+          "type": "felt"
+        }
+      ],
+      "name": "set_l1_bridge",
+      "outputs": [],
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "name": "reward_token",
+          "type": "felt"
+        }
+      ],
+      "name": "set_reward_token",
+      "outputs": [],
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "name": "l1_token",
+          "type": "felt"
+        },
+        {
+          "name": "l2_token",
+          "type": "felt"
+        }
+      ],
+      "name": "approve_bridge",
+      "outputs": [],
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "name": "l2_token",
+          "type": "felt"
+        },
+        {
+          "name": "l1_recipient",
+          "type": "felt"
+        },
+        {
+          "name": "amount",
+          "type": "Uint256"
+        }
+      ],
+      "name": "initiate_withdraw",
+      "outputs": [],
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "name": "l1_recipient",
+          "type": "felt"
+        },
+        {
+          "name": "amount",
+          "type": "Uint256"
+        }
+      ],
+      "name": "bridge_rewards",
+      "outputs": [],
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "name": "from_address",
+          "type": "felt"
+        },
+        {
+          "name": "l1_sender",
+          "type": "felt"
+        },
+        {
+          "name": "l2_recipient",
+          "type": "felt"
+        },
+        {
+          "name": "l2_token",
+          "type": "felt"
+        },
+        {
+          "name": "amount_low",
+          "type": "felt"
+        },
+        {
+          "name": "amount_high",
+          "type": "felt"
+        },
+        {
+          "name": "block_number_low",
+          "type": "felt"
+        },
+        {
+          "name": "block_number_high",
+          "type": "felt"
+        },
+        {
+          "name": "l1_rewards_index_low",
+          "type": "felt"
+        },
+        {
+          "name": "l1_rewards_index_high",
+          "type": "felt"
+        }
+      ],
+      "name": "handle_deposit",
+      "outputs": [],
+      "type": "l1_handler"
+    },
+    {
+      "inputs": [
+        {
+          "name": "recipient",
+          "type": "felt"
+        },
+        {
+          "name": "amount",
+          "type": "Uint256"
+        }
+      ],
+      "name": "mint_rewards",
+      "outputs": [],
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "name": "from_address",
+          "type": "felt"
+        },
+        {
+          "name": "l1_sender",
+          "type": "felt"
+        },
+        {
+          "name": "l2_token",
+          "type": "felt"
+        },
+        {
+          "name": "block_number_low",
+          "type": "felt"
+        },
+        {
+          "name": "block_number_high",
+          "type": "felt"
+        },
+        {
+          "name": "l1_rewards_index_low",
+          "type": "felt"
+        },
+        {
+          "name": "l1_rewards_index_high",
+          "type": "felt"
+        }
+      ],
+      "name": "handle_index_update",
+      "outputs": [],
+      "type": "l1_handler"
+    }
+  ]
+}
