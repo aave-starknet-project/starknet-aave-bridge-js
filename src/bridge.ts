@@ -1,6 +1,7 @@
-const { bnToUint256 } = require("starknet/utils/uint256");
-const { toBN } = require("starknet/utils/number");
-const { getBridgeContract } = require("./utils/contract");
+import { getBridgeContract } from "./contracts";
+import { toBN } from "starknet/utils/number";
+import { bnToUint256 } from "starknet/utils/uint256";
+import { defaultProvider } from "starknet";
 
 /**
  * @dev this function withdraws staticATokens on l2 and bridges them back to their corresponding l1 aTokens
@@ -9,11 +10,11 @@ const { getBridgeContract } = require("./utils/contract");
  * @param l1_recipient the l1 recipient address
  * @param amount to withdraw
  */
-module.exports = async function withdraw(
-  StarknetWallet,
-  l2_token,
-  l1_recipient,
-  amount
+export async function withdraw(
+  StarknetWallet: any,
+  l2_token: string,
+  l1_recipient: string,
+  amount: string
 ) {
   try {
     const bridge = getBridgeContract(StarknetWallet);
@@ -24,11 +25,12 @@ module.exports = async function withdraw(
       bnToUint256(toBN(amount))
     );
 
-    return await defaultProvider.waitForTransaction(withdrawTxHash);
-  } catch (err) {
+    await defaultProvider.waitForTransaction(withdrawTxHash);
+    return;
+  } catch (err: any) {
     throw new Error(err.message);
   }
-};
+}
 
 /**
  * @dev function called to redeem the rewards Aave token on l2 against the rewards tokens on l1
@@ -36,10 +38,10 @@ module.exports = async function withdraw(
  * @param l1_recipient the l1 recipient address
  * @param amount to bridge
  */
-module.exports = async function bridgeRewards(
-  StarknetWallet,
-  l1_recipient,
-  amount
+export async function bridgeRewards(
+  StarknetWallet: any,
+  l1_recipient: string,
+  amount: string
 ) {
   try {
     const bridge = getBridgeContract(StarknetWallet);
@@ -47,8 +49,9 @@ module.exports = async function bridgeRewards(
     const { transaction_hash: bridgeRewardsTxHash } =
       await bridge.bridge_rewards(l1_recipient, bnToUint256(toBN(amount)));
 
-    return await defaultProvider.waitForTransaction(bridgeRewardsTxHash);
-  } catch (err) {
+    await defaultProvider.waitForTransaction(bridgeRewardsTxHash);
+    return;
+  } catch (err: any) {
     throw new Error(err.message);
   }
-};
+}
