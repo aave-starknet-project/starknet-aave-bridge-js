@@ -3,6 +3,7 @@ import { toBN } from "starknet/utils/number";
 import { bnToUint256 } from "starknet/utils/uint256";
 import { defaultProvider } from "starknet";
 import { IStarknetWindowObject } from "get-starknet";
+import { GetTransactionStatusResponse } from "starknet";
 
 /**
  * @dev this function withdraws staticATokens on l2 and bridges them back to their corresponding l1 aTokens
@@ -16,7 +17,7 @@ export async function withdraw(
   l2_token: string,
   l1_recipient: string,
   amount: string
-) {
+): Promise<GetTransactionStatusResponse> {
   try {
     const bridge = getBridgeContract(StarknetWallet);
 
@@ -27,7 +28,7 @@ export async function withdraw(
     );
 
     await defaultProvider.waitForTransaction(withdrawTxHash);
-    return;
+    return defaultProvider.getTransactionStatus(withdrawTxHash);
   } catch (err: any) {
     throw new Error(err.message);
   }
@@ -43,7 +44,7 @@ export async function bridgeRewards(
   StarknetWallet: IStarknetWindowObject,
   l1_recipient: string,
   amount: string
-) {
+): Promise<GetTransactionStatusResponse> {
   try {
     const bridge = getBridgeContract(StarknetWallet);
 
@@ -51,7 +52,8 @@ export async function bridgeRewards(
       await bridge.bridge_rewards(l1_recipient, bnToUint256(toBN(amount)));
 
     await defaultProvider.waitForTransaction(bridgeRewardsTxHash);
-    return;
+
+    return defaultProvider.getTransactionStatus(bridgeRewardsTxHash);
   } catch (err: any) {
     throw new Error(err.message);
   }
