@@ -27,8 +27,8 @@ export async function withdraw(
       bnToUint256(toBN(amount))
     );
 
-    await defaultProvider.waitForTransaction(withdrawTxHash);
-    return defaultProvider.getTransactionStatus(withdrawTxHash);
+    await StarknetWallet.provider.waitForTransaction(withdrawTxHash);
+    return StarknetWallet.provider.getTransactionStatus(withdrawTxHash);
   } catch (err: any) {
     throw new Error(err.message);
   }
@@ -51,9 +51,9 @@ export async function bridgeRewards(
     const { transaction_hash: bridgeRewardsTxHash } =
       await bridge.bridge_rewards(l1_recipient, bnToUint256(toBN(amount)));
 
-    await defaultProvider.waitForTransaction(bridgeRewardsTxHash);
+    await StarknetWallet.provider.waitForTransaction(bridgeRewardsTxHash);
 
-    return defaultProvider.getTransactionStatus(bridgeRewardsTxHash);
+    return StarknetWallet.provider.getTransactionStatus(bridgeRewardsTxHash);
   } catch (err: any) {
     throw new Error(err.message);
   }
