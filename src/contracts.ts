@@ -1,9 +1,10 @@
 import { starknetBridgeContractAddress } from "./addresses";
-const fs = require("fs");
+import { IStarknetWindowObject } from "get-starknet";
+import fs from "fs";
 
 import { Contract, json } from "starknet";
 
-export function getBridgeContract(wallet: any): Contract {
+export function getBridgeContract(wallet: IStarknetWindowObject): Contract {
   try {
     const bridgeContract = json.parse(
       fs.readFileSync("./contracts/bridge.json").toString("ascii")
