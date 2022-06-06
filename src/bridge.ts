@@ -1,7 +1,6 @@
 import { getBridgeContract } from "./contracts";
 import { toBN } from "starknet/utils/number";
 import { bnToUint256 } from "starknet/utils/uint256";
-import { defaultProvider } from "starknet";
 import { IStarknetWindowObject } from "get-starknet";
 import { GetTransactionStatusResponse } from "starknet";
 
@@ -14,7 +13,7 @@ import { GetTransactionStatusResponse } from "starknet";
  */
 export async function withdraw(
   StarknetWallet: IStarknetWindowObject,
-  l2_token: string,
+  l2_token: bigint,
   l1_recipient: string,
   amount: string
 ): Promise<GetTransactionStatusResponse> {

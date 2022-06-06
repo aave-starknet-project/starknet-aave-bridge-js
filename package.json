@@ -1,12 +1,13 @@
 {
-  "name": "starknet-aave-bridge.js",
+  "name": "starknet-aave-bridge-js",
   "version": "1.0.0",
   "description": "",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "tsc": "tsc"
+    "tsc": "tsc",
+    "prepare": "yarn tsc"
   },
   "author": "Soufiane Hajazi",
   "license": "MIT",
