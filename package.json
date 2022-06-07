@@ -7,12 +7,14 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "tsc": "tsc",
-    "prepare": "yarn tsc"
+    "prepare": "yarn tsc",
+    "lint": "eslint . --cache --fix --ext .ts"
   },
   "author": "Soufiane Hajazi",
   "license": "MIT",
   "dependencies": {
     "get-starknet": "^1.4.1",
+    "lint": "^0.7.0",
     "starknet": "^3.12.3"
   },
   "importSort": {
@@ -21,7 +23,14 @@
       "parser": "typescript"
     }
   },
+  "lint-staged": {
+    "*.ts": "eslint --cache --fix",
+    "*.{ts,js,md,yml,json}": "prettier --write"
+  },
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.27.1",
+    "@typescript-eslint/parser": "^5.27.1",
+    "eslint": "^8.17.0",
     "typescript": "^4.7.3"
   }
 }
