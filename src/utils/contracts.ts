@@ -19,3 +19,18 @@ export function getBridgeContract(wallet: IStarknetWindowObject): Contract {
     throw new Error(error.message);
   }
 }
+
+export function getStaticATokenContract(address: bigint): Contract {
+  try {
+    const staticATokenContract = json.parse(
+      fs.readFileSync("./contracts/static_a_token.json").toString("ascii")
+    );
+
+    return new Contract(
+      staticATokenContract.abi,
+      starknetBridgeContractAddress
+    );
+  } catch (error: any) {
+    throw new Error(error.message);
+  }
+}

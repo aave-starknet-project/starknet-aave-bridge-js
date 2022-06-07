@@ -1,3 +1,3 @@
-export * from "./addresses";
+export * from "./utils/addresses";
 export * from "./bridge";
-export * from "./contracts";
+export * from "./utils/contracts";

@@ -1,4 +1,4 @@
-import { getBridgeContract } from "./contracts";
+import { getBridgeContract } from "./utils/contracts";
 import { toBN } from "starknet/utils/number";
 import { bnToUint256 } from "starknet/utils/uint256";
 import { IStarknetWindowObject } from "get-starknet";
