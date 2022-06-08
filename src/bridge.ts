@@ -17,20 +17,16 @@ export async function withdraw(
   l1_recipient: string,
   amount: string
 ): Promise<GetTransactionStatusResponse> {
-  try {
-    const bridge = getBridgeContract(StarknetWallet);
+  const bridge = getBridgeContract(StarknetWallet);
 
-    const { transaction_hash: withdrawTxHash } = await bridge.initiate_withdraw(
-      l2_token,
-      l1_recipient,
-      bnToUint256(toBN(amount))
-    );
+  const { transaction_hash: withdrawTxHash } = await bridge.initiate_withdraw(
+    l2_token,
+    l1_recipient,
+    bnToUint256(toBN(amount))
+  );
 
-    await StarknetWallet.provider.waitForTransaction(withdrawTxHash);
-    return StarknetWallet.provider.getTransactionStatus(withdrawTxHash);
-  } catch (err: any) {
-    throw new Error(err.message);
-  }
+  await StarknetWallet.provider.waitForTransaction(withdrawTxHash);
+  return StarknetWallet.provider.getTransactionStatus(withdrawTxHash);
 }
 
 /**
@@ -44,16 +40,14 @@ export async function bridgeRewards(
   l1_recipient: string,
   amount: string
 ): Promise<GetTransactionStatusResponse> {
-  try {
-    const bridge = getBridgeContract(StarknetWallet);
+  const bridge = getBridgeContract(StarknetWallet);
 
-    const { transaction_hash: bridgeRewardsTxHash } =
-      await bridge.bridge_rewards(l1_recipient, bnToUint256(toBN(amount)));
+  const { transaction_hash: bridgeRewardsTxHash } = await bridge.bridge_rewards(
+    l1_recipient,
+    bnToUint256(toBN(amount))
+  );
 
-    await StarknetWallet.provider.waitForTransaction(bridgeRewardsTxHash);
+  await StarknetWallet.provider.waitForTransaction(bridgeRewardsTxHash);
 
-    return StarknetWallet.provider.getTransactionStatus(bridgeRewardsTxHash);
-  } catch (err: any) {
-    throw new Error(err.message);
-  }
+  return StarknetWallet.provider.getTransactionStatus(bridgeRewardsTxHash);
 }
