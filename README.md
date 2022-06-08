@@ -30,3 +30,29 @@ export const handleWithdraw=async (
   
 }
 ```
+
+
+Get staticAToken data:
+
+```javascript
+
+import {getStaticATokenData} from "@starknet-aave-bridge-js";
+
+const tokenInfo=getStaticATokenData(aDAI.address);// returns totalSupply, last_rewards_index_blocknumber & current_rewards_index
+    };
+
+
+
+```
+
+Get staticATokens holder info:
+
+```javascript
+
+import {getUserInfo} from "@starknet-aave-bridge-js";
+
+const userInfo=getUserInfo(aDAI.address, l2_user_address );// returns balance, user's pending rewards & latest claimed rewards index (snapshot)
+
+
+
+```
