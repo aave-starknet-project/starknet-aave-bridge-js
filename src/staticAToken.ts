@@ -1,3 +1,4 @@
+import { uint256ToBN } from "starknet/dist/utils/uint256";
 import { getStaticATokenContract } from ".";
 import { tokenData, userInfo } from "./utils/types";
 
@@ -5,7 +6,7 @@ import { tokenData, userInfo } from "./utils/types";
  * @param l2_token the staticAToken address on Starknet
  */
 export async function getStaticATokenData(
-  l2_token: bigint
+  l2_token: string
 ): Promise<tokenData> {
   const staticAToken = getStaticATokenContract(l2_token);
 
@@ -14,9 +15,9 @@ export async function getStaticATokenData(
   const { rewards_index } = await staticAToken.get_rewards_index();
 
   return {
-    totalSupply: totalSupply,
-    last_rewards_index_update: blocknumber,
-    current_rewards_index: rewards_index,
+    totalSupply: uint256ToBN(totalSupply),
+    last_rewards_index_update: uint256ToBN(blocknumber),
+    current_rewards_index: uint256ToBN(rewards_index),
   };
 }
 
@@ -25,7 +26,7 @@ export async function getStaticATokenData(
  * @param user address
  */
 export async function getUserInfo(
-  l2_token: bigint,
+  l2_token: string,
   user: bigint
 ): Promise<userInfo> {
   const staticAToken = getStaticATokenContract(l2_token);
@@ -39,8 +40,8 @@ export async function getUserInfo(
   } = await staticAToken.get_user_claimable_rewards(user);
 
   return {
-    balance: balance,
-    pending_rewards: user_claimable_rewards,
-    user_snapshot: user_rewards_index,
+    balance: uint256ToBN(balance),
+    pending_rewards: uint256ToBN(user_claimable_rewards),
+    user_snapshot: uint256ToBN(user_rewards_index),
   };
 }

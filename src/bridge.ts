@@ -17,7 +17,7 @@ export async function withdraw(
   l1_recipient: string,
   amount: string
 ): Promise<GetTransactionStatusResponse> {
-  const bridge = getBridgeContract(StarknetWallet);
+  const bridge = getBridgeContract(StarknetWallet.account);
 
   const { transaction_hash: withdrawTxHash } = await bridge.initiate_withdraw(
     l2_token,
@@ -40,7 +40,7 @@ export async function bridgeRewards(
   l1_recipient: string,
   amount: string
 ): Promise<GetTransactionStatusResponse> {
-  const bridge = getBridgeContract(StarknetWallet);
+  const bridge = getBridgeContract(StarknetWallet.account);
 
   const { transaction_hash: bridgeRewardsTxHash } = await bridge.bridge_rewards(
     l1_recipient,

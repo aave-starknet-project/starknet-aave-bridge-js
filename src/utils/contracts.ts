@@ -1,36 +1,30 @@
 import { starknetBridgeContractAddress } from "./addresses";
-import { IStarknetWindowObject } from "get-starknet";
+import { AccountInterface, Provider } from "starknet";
+import { Contract, json } from "starknet";
 import fs from "fs";
 
-import { Contract, json } from "starknet";
-
-export function getBridgeContract(wallet: IStarknetWindowObject): Contract {
-  try {
-    const bridgeContract = json.parse(
-      fs.readFileSync("./contracts/bridge.json").toString("ascii")
-    );
-
-    return new Contract(
-      bridgeContract.abi,
-      starknetBridgeContractAddress,
-      wallet.account
-    );
-  } catch (error: any) {
-    throw new Error(error.message);
-  }
+export function getBridgeContract(
+  wallet?: Provider | AccountInterface
+): Contract {
+  const bridgeContract = json.parse(
+    fs.readFileSync("./abis/bridge.json").toString("ascii")
+  );
+  const bridge = wallet
+    ? new Contract(bridgeContract.abi, starknetBridgeContractAddress, wallet)
+    : new Contract(bridgeContract.abi, starknetBridgeContractAddress);
+  return bridge;
 }
 
-export function getStaticATokenContract(address: bigint): Contract {
-  try {
-    const staticATokenContract = json.parse(
-      fs.readFileSync("./contracts/static_a_token.json").toString("ascii")
-    );
+export function getStaticATokenContract(
+  address: string,
+  provider?: Provider
+): Contract {
+  const staticATokenContract = json.parse(
+    fs.readFileSync("./abis/static_a_token.json").toString("ascii")
+  );
 
-    return new Contract(
-      staticATokenContract.abi,
-      starknetBridgeContractAddress
-    );
-  } catch (error: any) {
-    throw new Error(error.message);
-  }
+  const token = provider
+    ? new Contract(staticATokenContract.abi, address, provider)
+    : new Contract(staticATokenContract.abi, address);
+  return token;
 }
