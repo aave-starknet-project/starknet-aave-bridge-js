@@ -40,7 +40,7 @@ Get staticAToken data:
 import {getStaticATokenData} from "@starknet-aave-bridge-js";
 
 const tokenInfo=getStaticATokenData(aDAI.address);// returns totalSupply, last_rewards_index_blocknumber & current_rewards_index
-    };
+ 
 
 
 
