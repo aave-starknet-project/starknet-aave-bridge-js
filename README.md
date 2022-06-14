@@ -26,7 +26,8 @@ export const handleWithdraw=async (
     const starknet=getStarknet();
     await starknet.enable();
 
-    return withdraw(starknet, l2_token, l1_recipient, amount);
+    const tx=withdraw(starknet, l2_token, l1_recipient, amount);
+    return tx;
   
 }
 ```
