@@ -1,7 +1,7 @@
 # starknet-aave-bridge.js
 
 
-The starknet-aave-bridge.js package gives developers access to methods for interacting with the AAVE bridge & staticATokens on Starknet using [ArgentX](https://github.com/argentlabs/argent-x).
+The starknet-aave-bridge.js package gives developers access to methods for interacting with the AAVE bridge & staticATokens on Starknet using [ArgentX](https://github.com/argentlabs/argent-x) & [Starknet.js](https://github.com/0xs34n/starknet.js).
 
 Install starknet-aave-bridge-js with `npm`
 
