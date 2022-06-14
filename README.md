@@ -31,29 +31,37 @@ export const handleWithdraw=async (
   
 }
 ```
+claim rewards:
 
+```javascript
+import {claimRewards} from "@starknet-aave-bridge-js";
+
+export const handleClaim=async (
+  l2_token: bigint,
+  recipient: string
+): Promise<any> => {
+
+    const starknet=getStarknet();
+    await starknet.enable();
+
+    const tx=claimRewards(starknet, l2_token, recipient);
+    return tx;
+  
+}
+```
 
 Get staticAToken data:
 
 ```javascript
-
 import {getStaticATokenData} from "@starknet-aave-bridge-js";
 
 const tokenInfo=getStaticATokenData(aDAI.address);// returns totalSupply, last_rewards_index_blocknumber & current_rewards_index
- 
-
-
-
-```
+ ```
 
 Get staticATokens holder info:
 
 ```javascript
-
 import {getUserInfo} from "@starknet-aave-bridge-js";
 
 const userInfo=getUserInfo(aDAI.address, l2_user_address );// returns balance, user's pending rewards & latest claimed rewards index (snapshot)
-
-
-
 ```
