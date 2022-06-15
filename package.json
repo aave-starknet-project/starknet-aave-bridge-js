@@ -1,6 +1,6 @@
 {
-  "name": "starknet-aave-bridge-js",
-  "version": "1.1.0",
+  "name": "aave-starknet-bridge-js",
+  "version": "1.0.0",
   "description": "",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -12,6 +12,11 @@
   },
   "author": "Soufiane Hajazi",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hsouf/starknet-aave-bridge-js.git"
+  },
+  "homepage": "https://github.com/hsouf/starknet-aave-bridge-js#readme",
   "dependencies": {
     "get-starknet": "^1.4.1",
     "lint": "^0.7.0",

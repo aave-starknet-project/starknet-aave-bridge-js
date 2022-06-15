@@ -21,8 +21,8 @@ export function getBridgeContract(
 }
 
 /**
- * @dev returns bridge contract
- * @param starknet wallet (provides signer+provider)
+ * @param address token address
+ * @param wallet The starknet wallet (optional)
  */
 export function getStaticATokenContract(
   address: string,

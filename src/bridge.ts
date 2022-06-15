@@ -5,7 +5,7 @@ import { IStarknetWindowObject } from "get-starknet";
 import { GetTransactionStatusResponse } from "starknet";
 
 /**
- * @dev this function withdraws staticATokens on l2 and bridges them back to their corresponding l1 aTokens
+ * @dev this function withdraws staticATokens on l2 and bridges them back to l1
  * @param StarnetWallet the connected starknet wallet provided by the @argent/get-starknet package
  * @param l2_token the staticAToken address on Starknet
  * @param l1_recipient the l1 recipient address
@@ -30,10 +30,10 @@ export async function withdraw(
 }
 
 /**
- * @dev function called to redeem the rewards Aave token on l2 against the rewards tokens on l1
+ * @dev allows users to bridge their rewAave tokens to l1
  * @param StarnetWallet the connected starknet wallet provided by the @argent/get-starknet package
  * @param l1_recipient the l1 recipient address
- * @param amount to bridge
+ * @param amount to be bridged
  */
 export async function bridgeRewards(
   StarknetWallet: IStarknetWindowObject,
