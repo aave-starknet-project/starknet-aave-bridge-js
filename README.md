@@ -10,8 +10,6 @@ $ npm install starknet-aave-bridge-js
 ```
 ## Sample usage
 
-Withdrawing staticATokens on l2:
-
 
 ```javascript
 import {getStarknet} from "@argent/get-starknet";
@@ -42,7 +40,7 @@ const contract = getBridgeContract();
 ```
 
 ### withdraw
-Withdraws staticATokens on l2 and bridges them back to their corresponding l1 aTokens
+Withdraws staticATokens from l2 and bridges them back to their corresponding l1 aTokens
  * @param `StarnetWallet` the connected starknet wallet 
  * @param `l2_token` the staticAToken address on Starknet
  * @param `l1_recipient` the l1 recipient address
