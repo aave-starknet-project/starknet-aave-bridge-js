@@ -1,7 +1,7 @@
 # starknet-aave-bridge.js
 
 
-The starknet-aave-bridge.js package gives developers access to methods for interacting with the AAVE bridge & staticATokens on Starknet using [ArgentX](https://github.com/argentlabs/argent-x) & [Starknet.js](https://github.com/0xs34n/starknet.js).
+The starknet-aave-bridge.js package gives developers access to methods for interacting with the AAVE bridge & staticATokens on Starknet using StarkNet wallets & [Starknet.js](https://github.com/0xs34n/starknet.js).
 
 Install starknet-aave-bridge-js with `npm`
 
@@ -12,7 +12,7 @@ $ npm install starknet-aave-bridge-js
 
 
 ```javascript
-import {getStarknet} from "@argent/get-starknet";
+import {getStarknet} from "get-starknet";
 import {withdraw} from "@starknet-aave-bridge-js";
 
 export const handleWithdraw=async (
@@ -53,7 +53,7 @@ const tx= await withdraw(starknet, l2_token, l1_recipient, amount);
 ### bridgeRewards
 
 Allows users to bridge their `rewAave` tokens and receive rewards on l1.
- * @param `StarnetWallet` the connected starknet wallet provided by the @argent/get-starknet package
+ * @param `StarnetWallet` the connected starknet wallet provided by the get-starknet package
  * @param `l1_recipient` the l1 recipient address
  * @param `amount` to be bridged
 

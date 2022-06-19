@@ -63,7 +63,7 @@ export async function getUserInfo(
 
 /**
  * @dev this function withdraws staticATokens on l2 and bridges them back to their corresponding l1 aTokens
- * @param StarnetWallet the connected starknet wallet provided by the @argent/get-starknet package
+ * @param StarnetWallet the connected starknet wallet provided by the get-starknet package
  * @param l2_token the staticAToken address on Starknet
  * @param recipient of rewards tokens
  * @param amount to withdraw
@@ -88,7 +88,7 @@ export async function claimRewards(
 
 /**
  * @dev this function allows anyone to push
- * @param StarnetWallet the connected starknet wallet provided by the @argent/get-starknet package
+ * @param StarnetWallet the connected starknet wallet provided by the get-starknet package
  * @param rewards index
  */
 export async function updateRewardsIndex(
