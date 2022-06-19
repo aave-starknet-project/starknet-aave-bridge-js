@@ -5,7 +5,7 @@ import fs from "fs";
 
 /**
  * @dev returns bridge contract
- * @param Starknet wallet (supports ArgentX)
+ * @param Starknet wallet
  */
 
 export function getBridgeContract(
