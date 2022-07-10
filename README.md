@@ -41,7 +41,7 @@ const contract = getBridgeContract();
 
 ### withdraw
 Withdraws staticATokens from l2 and bridges them back to their corresponding l1 aTokens
- * @param `StarnetWallet` the connected starknet wallet 
+ * @param `StarknetWallet` the connected starknet wallet provided by the get-starknet package
  * @param `l2_token` the staticAToken address on Starknet
  * @param `l1_recipient` the l1 recipient address
  * @param  `amount` to withdraw
@@ -53,7 +53,7 @@ const tx= await withdraw(starknet, l2_token, l1_recipient, amount);
 ### bridgeRewards
 
 Allows users to bridge their `rewAave` tokens and receive rewards on l1.
- * @param `StarnetWallet` the connected starknet wallet provided by the get-starknet package
+ * @param `StarknetWallet` 
  * @param `l1_recipient` the l1 recipient address
  * @param `amount` to be bridged
 
@@ -78,7 +78,7 @@ Returns a staticAToken contract instance
 
 ### claim rewards (rewAave):
 Claims user pending rewards on a given `staticAToken.
- * @param `StarnetWallet` the connected Starknet wallet 
+ * @param `StarknetWallet` the connected Starknet wallet 
  * @param `l2_token` the staticAToken address on Starknet
  * @param `recipient` of rewards tokens
 ```javascript
@@ -101,7 +101,7 @@ const data=await getStaticATokenData(aDAI.address, provider);// returns totalSup
  ```
 
 ### getUserInfo
-Gets users data related to a specific `staticAToken`
+Gets user data related to a specific `staticAToken`
 
  * @param `l2_token` the staticAToken address on Starknet
  * @param `user` address

@@ -6,7 +6,7 @@ import { GetTransactionStatusResponse } from "starknet";
 
 /**
  * @dev this function withdraws staticATokens on l2 and bridges them back to l1
- * @param StarnetWallet the connected starknet wallet provided by the get-starknet package
+ * @param StarknetWallet the connected starknet wallet provided by the get-starknet package
  * @param l2_token the staticAToken address on Starknet
  * @param l1_recipient the l1 recipient address
  * @param amount to withdraw
@@ -31,7 +31,7 @@ export async function withdraw(
 
 /**
  * @dev allows users to bridge their rewAave tokens to l1
- * @param StarnetWallet the connected starknet wallet provided by the get-starknet package
+ * @param StarknetWallet the connected starknet wallet provided by the get-starknet package
  * @param l1_recipient the l1 recipient address
  * @param amount to be bridged
  */
