@@ -1,8 +1,6 @@
 import { getBridgeContract } from "./utils/contracts";
-import { toBN } from "starknet/utils/number";
-import { bnToUint256 } from "starknet/utils/uint256";
 import { IStarknetWindowObject } from "get-starknet";
-import { GetTransactionStatusResponse } from "starknet";
+import { GetTransactionStatusResponse, uint256, number } from "starknet";
 
 /**
  * @dev this function withdraws staticATokens on l2 and bridges them back to l1
@@ -22,7 +20,7 @@ export async function withdraw(
   const { transaction_hash: withdrawTxHash } = await bridge.initiate_withdraw(
     l2_token,
     l1_recipient,
-    bnToUint256(toBN(amount))
+    uint256.bnToUint256(amount)
   );
 
   await StarknetWallet.provider.waitForTransaction(withdrawTxHash);
@@ -44,7 +42,7 @@ export async function bridgeRewards(
 
   const { transaction_hash: bridgeRewardsTxHash } = await bridge.bridge_rewards(
     l1_recipient,
-    bnToUint256(toBN(amount))
+    uint256.bnToUint256(amount)
   );
 
   await StarknetWallet.provider.waitForTransaction(bridgeRewardsTxHash);

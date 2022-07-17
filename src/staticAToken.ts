@@ -1,11 +1,14 @@
-import { toHex } from "starknet/dist/utils/number";
 import { Provider } from "starknet";
-import { uint256ToBN } from "starknet/dist/utils/uint256";
 import { getStaticATokenContract } from ".";
 import { tokenData, userInfo } from "./utils/types";
 import { IStarknetWindowObject } from "get-starknet";
-import { GetTransactionStatusResponse } from "starknet";
-import { decodeShortString } from "starknet/dist/utils/shortString";
+import {
+  GetTransactionStatusResponse,
+  shortString,
+  number,
+  uint256,
+} from "starknet";
+import { getTransactionStatus, waitForTransaction } from "./utils/tx";
 
 /**
  * @param l2_token the staticAToken address on Starknet
@@ -16,21 +19,28 @@ export async function getStaticATokenData(
   provider?: Provider
 ): Promise<tokenData> {
   const staticAToken = getStaticATokenContract(l2_token, provider);
-
-  const { totalSupply } = await staticAToken.totalSupply();
-  const { blocknumber } = await staticAToken.get_last_update();
-  const { rewards_index } = await staticAToken.get_rewards_index();
-  const { name } = await staticAToken.name();
-  const { symbol } = await staticAToken.symbol();
-  const { decimals } = await staticAToken.decimals();
-
+  const [
+    totalSupply,
+    blockNumber,
+    rewards_index,
+    name,
+    symbol,
+    decimals,
+  ] = await Promise.all([
+    staticAToken.totalSupply(),
+    staticAToken.get_last_update(),
+    staticAToken.get_rewards_index(),
+    staticAToken.name(),
+    staticAToken.symbol(),
+    staticAToken.decimals(),
+  ]);
   return {
-    name: decodeShortString(toHex(name)),
-    symbol: decodeShortString(toHex(symbol)),
+    name: shortString.decodeShortString(number.toHex(name)),
+    symbol: shortString.decodeShortString(number.toHex(symbol)),
     decimals: decimals,
-    totalSupply: uint256ToBN(totalSupply),
-    last_rewards_index_update: uint256ToBN(blocknumber),
-    current_rewards_index: uint256ToBN(rewards_index),
+    totalSupply: uint256.uint256ToBN(totalSupply),
+    last_rewards_index_update: uint256.uint256ToBN(blockNumber),
+    current_rewards_index: uint256.uint256ToBN(rewards_index.wad), //returns index in wad
   };
 }
 
@@ -46,18 +56,19 @@ export async function getUserInfo(
 ): Promise<userInfo> {
   const staticAToken = getStaticATokenContract(l2_token, provider);
 
-  const { balance } = await staticAToken.balanceOf(user);
-  const { user_rewards_index } = await staticAToken.get_user_rewards_index(
-    user
-  );
-  const {
+  const [
+    balance,
+    user_rewards_index,
     user_claimable_rewards,
-  } = await staticAToken.get_user_claimable_rewards(user);
-
+  ] = await Promise.all([
+    staticAToken.balanceOf(user),
+    staticAToken.get_user_rewards_index(user),
+    staticAToken.get_user_claimable_rewards(user),
+  ]);
   return {
-    balance: uint256ToBN(balance),
-    pending_rewards: uint256ToBN(user_claimable_rewards),
-    user_snapshot: uint256ToBN(user_rewards_index),
+    balance: uint256.uint256ToBN(balance),
+    pending_rewards: uint256.uint256ToBN(user_claimable_rewards),
+    user_snapshot: uint256.uint256ToBN(user_rewards_index.wad),
   };
 }
 
@@ -79,11 +90,11 @@ export async function claimRewards(
   );
 
   const { transaction_hash: claimTxHash } = await staticAToken.claim_rewards(
-    BigInt(recipient)
+    number.toBN(recipient)
   );
 
-  await StarknetWallet.provider.waitForTransaction(claimTxHash);
-  return StarknetWallet.provider.getTransactionStatus(claimTxHash);
+  await waitForTransaction(claimTxHash, StarknetWallet);
+  return getTransactionStatus(claimTxHash, StarknetWallet);
 }
 
 /**
@@ -94,17 +105,20 @@ export async function claimRewards(
 export async function updateRewardsIndex(
   StarknetWallet: IStarknetWindowObject,
   l2_token: string,
-  recipient: string
+  blockNumber: string,
+  index: string
 ): Promise<GetTransactionStatusResponse> {
   const staticAToken = getStaticATokenContract(
     l2_token,
     StarknetWallet.account
   );
 
-  const { transaction_hash: claimTxHash } = await staticAToken.claim_rewards(
-    BigInt(recipient)
-  );
+  const {
+    transaction_hash: pushRewardsIndexTxHash,
+  } = await staticAToken.push_rewards_index(uint256.bnToUint256(blockNumber), {
+    wad: uint256.bnToUint256(index),
+  });
 
-  await StarknetWallet.provider.waitForTransaction(claimTxHash);
-  return StarknetWallet.provider.getTransactionStatus(claimTxHash);
+  await waitForTransaction(pushRewardsIndexTxHash, StarknetWallet);
+  return getTransactionStatus(pushRewardsIndexTxHash, StarknetWallet);
 }

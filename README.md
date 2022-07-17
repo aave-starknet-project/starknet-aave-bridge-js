@@ -11,7 +11,7 @@ $ npm install starknet-aave-bridge-js
 ## Sample usage
 
 
-```javascript
+```typescript
 import {getStarknet} from "get-starknet";
 import {withdraw} from "@starknet-aave-bridge-js";
 
@@ -35,7 +35,7 @@ export const handleWithdraw=async (
 
 Returns the bridge contract instance.
  * @param `account` the connected starknet account (optional)
-```javascript
+```typescript
 const contract = getBridgeContract();
 ```
 
@@ -45,7 +45,7 @@ Withdraws staticATokens from l2 and bridges them back to their corresponding l1 
  * @param `l2_token` the staticAToken address on Starknet
  * @param `l1_recipient` the l1 recipient address
  * @param  `amount` to withdraw
-```javascript
+```typescript
 import {withdraw} from "@starknet-aave-bridge-js";
 ...
 const tx= await withdraw(starknet, l2_token, l1_recipient, amount);
@@ -57,7 +57,7 @@ Allows users to bridge their `rewAave` tokens and receive rewards on l1.
  * @param `l1_recipient` the l1 recipient address
  * @param `amount` to be bridged
 
-```javascript
+```typescript
 import {bridgeRewards} from "@starknet-aave-bridge-js";
 ...
 const tx= await bridgeRewards(wallet, l1_recipient, amount);
@@ -70,7 +70,7 @@ const tx= await bridgeRewards(wallet, l1_recipient, amount);
 
 Returns a staticAToken contract instance
 
-```javascript
+```typescript
 
 
  const contract = getStaticATokenContract(aDai.address);
@@ -81,7 +81,7 @@ Claims user pending rewards on a given `staticAToken.
  * @param `StarknetWallet` the connected Starknet wallet 
  * @param `l2_token` the staticAToken address on Starknet
  * @param `recipient` of rewards tokens
-```javascript
+```typescript
 import {claimRewards} from "@starknet-aave-bridge-js";
 ...
 
@@ -94,7 +94,7 @@ Gets token totalSupply, last rewards index update & current_rewards_index.
  * @param `l2_token` the staticAToken address on Starknet
  * @param `provider`  ( defaulted to Alpha testnet if not provided)
 
-```javascript
+```typescript
 import {getStaticATokenData} from "@starknet-aave-bridge-js";
 ...
 const data=await getStaticATokenData(aDAI.address, provider);// returns totalSupply, last_rewards_index_blocknumber & current_rewards_index
@@ -107,7 +107,7 @@ Gets user data related to a specific `staticAToken`
  * @param `user` address
  * @param `provider` ( defaulted to Alpha testnet if not provided)
 
-```javascript
+```typescript
 import {getUserInfo} from "@starknet-aave-bridge-js";
 ...
 const data=await getUserInfo(aDAI.address, l2_user_address, provider);// returns balance, user's pending rewards & latest claimed rewards index (snapshot)
