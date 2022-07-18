@@ -12,7 +12,7 @@ import { getStaticATokenContract } from "../utils/contracts";
 
 /**
  * @param l2_token the staticAToken address on Starknet
- * @param provider (if no provider was provided will default to Aplha)
+ * @param provider
  */
 export async function getStaticATokenData(
   l2_token: string,
@@ -63,10 +63,9 @@ export async function getUserInfo(
 
 /**
  * @dev this function withdraws staticATokens on l2 and bridges them back to their corresponding l1 aTokens
- * @param StarknetWallet the connected starknet wallet provided by the get-starknet package
+ * @param StarknetWallet the connected starknet wallet provided by get-starknet package
  * @param l2_token the staticAToken address on Starknet
  * @param recipient of rewards tokens
- * @param amount to withdraw
  */
 export async function claimRewards(
   StarknetWallet: IStarknetWindowObject,
@@ -89,8 +88,8 @@ export async function claimRewards(
 
 /**
  * @dev this function allows anyone to push
- * @param StarknetWallet the connected starknet wallet provided by the get-starknet package
- * @param rewards index
+ * @param StarknetWallet the connected starknet wallet provided by get-starknet package
+ * @param index of rewards
  */
 export async function updateRewardsIndex(
   StarknetWallet: IStarknetWindowObject,

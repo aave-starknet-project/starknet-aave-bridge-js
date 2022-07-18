@@ -7,5 +7,6 @@
 .eslintcache
 .eslintrc.json
 
-/generated/contracts
+#typechain contracts wrappers
+/generated/contracts 
 
