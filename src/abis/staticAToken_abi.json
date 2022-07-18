@@ -20,12 +20,12 @@
     {
       "members": [
         {
-          "name": "ray",
+          "name": "wad",
           "offset": 0,
           "type": "Uint256"
         }
       ],
-      "name": "Ray",
+      "name": "Wad",
       "size": 2,
       "type": "struct"
     },
@@ -364,7 +364,7 @@
         },
         {
           "name": "rewards_index",
-          "type": "Ray"
+          "type": "Wad"
         }
       ],
       "name": "push_rewards_index",
@@ -377,9 +377,10 @@
       "outputs": [
         {
           "name": "rewards_index",
-          "type": "Ray"
+          "type": "Wad"
         }
       ],
+      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -396,6 +397,7 @@
           "type": "Uint256"
         }
       ],
+      "stateMutability": "view",
       "type": "function"
     },
     {

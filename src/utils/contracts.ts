@@ -1,26 +1,52 @@
-import bridge from "../abis/bridge.json";
-import staticAToken from "../abis/staticAToken.json";
 import { starknetBridgeContractAddress } from "./addresses";
-import { Abi, AccountInterface, Provider, Contract } from "starknet";
+import {
+  Abi,
+  AccountInterface,
+  Provider,
+  Contract,
+  ContractFactory,
+} from "starknet";
+import { bridge, staticAToken } from "../generated/contracts";
+import bridge_abi from "../abis/bridge_abi.json";
+import staticAToken_abi from "../abis/staticAToken_abi.json";
+
+function loadContract<C extends Contract>(
+  abi: Abi,
+  address: string,
+  provider: Provider
+): C {
+  return new Contract(abi, address, provider) as C;
+}
 
 /**
  * @dev returns bridge contract
- * @param Starknet wallet
+ * @param  provider
  */
+export function getBridgeContract(provider: Provider): bridge {
+  const abi: Abi = <Abi>bridge_abi.abi;
+  const bridgeContract: bridge = loadContract(
+    abi,
+    starknetBridgeContractAddress,
+    provider
+  );
 
-export function getBridgeContract(
-  wallet?: Provider | AccountInterface
-): Contract {
-  return new Contract(<Abi>bridge.abi, starknetBridgeContractAddress, wallet);
+  return bridgeContract;
 }
 
 /**
  * @param address token address
- * @param wallet The starknet wallet (optional)
+ * @param provider
  */
 export function getStaticATokenContract(
   address: string,
-  wallet?: Provider | AccountInterface
-): Contract {
-  return new Contract(<Abi>staticAToken.abi, address, wallet);
+  provider: Provider
+): staticAToken {
+  const abi: Abi = <Abi>staticAToken_abi.abi;
+  const staticATokenContract: staticAToken = loadContract(
+    abi,
+    address,
+    provider
+  );
+
+  return staticATokenContract;
 }

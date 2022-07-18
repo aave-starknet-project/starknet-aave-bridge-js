@@ -6,3 +6,6 @@
 
 .eslintcache
 .eslintrc.json
+
+/generated/contracts
+
