@@ -103,36 +103,36 @@ export interface bridge extends Contract {
     initialize_bridge(
       governor_address: BigNumberish,
       options?: { blockIdentifier?: BlockIdentifier }
-    ): Promise<[] & {}>;
+    ): Promise<[] & Record<string, unknown>>;
     set_l1_bridge(
       l1_bridge_address: BigNumberish,
       options?: { blockIdentifier?: BlockIdentifier }
-    ): Promise<[] & {}>;
+    ): Promise<[] & Record<string, unknown>>;
     set_reward_token(
       reward_token: BigNumberish,
       options?: { blockIdentifier?: BlockIdentifier }
-    ): Promise<[] & {}>;
+    ): Promise<[] & Record<string, unknown>>;
     approve_bridge(
       l1_token: BigNumberish,
       l2_token: BigNumberish,
       options?: { blockIdentifier?: BlockIdentifier }
-    ): Promise<[] & {}>;
+    ): Promise<[] & Record<string, unknown>>;
     initiate_withdraw(
       l2_token: BigNumberish,
       l1_recipient: BigNumberish,
       amount: Uint256,
       options?: { blockIdentifier?: BlockIdentifier }
-    ): Promise<[] & {}>;
+    ): Promise<[] & Record<string, unknown>>;
     bridge_rewards(
       l1_recipient: BigNumberish,
       amount: Uint256,
       options?: { blockIdentifier?: BlockIdentifier }
-    ): Promise<[] & {}>;
+    ): Promise<[] & Record<string, unknown>>;
     mint_rewards(
       recipient: BigNumberish,
       amount: Uint256,
       options?: { blockIdentifier?: BlockIdentifier }
-    ): Promise<[] & {}>;
+    ): Promise<[] & Record<string, unknown>>;
   };
   populateTransaction: {
     get_governor(options?: { blockIdentifier?: BlockIdentifier }): Invocation;

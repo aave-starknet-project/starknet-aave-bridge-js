@@ -1,15 +1,20 @@
 import { IStarknetWindowObject } from "get-starknet";
+import { AddTransactionResponse } from "starknet";
 
 export async function waitForTransaction(
-  transactionHash: string,
+  transaction: AddTransactionResponse,
   starknetWallet: IStarknetWindowObject
 ) {
-  return await starknetWallet.provider.waitForTransaction(transactionHash);
+  return await starknetWallet.provider.waitForTransaction(
+    transaction.transaction_hash
+  );
 }
 
 export function getTransactionStatus(
-  transactionHash: string,
+  transaction: AddTransactionResponse,
   starknetWallet: IStarknetWindowObject
 ) {
-  return starknetWallet.provider.getTransactionStatus(transactionHash);
+  return starknetWallet.provider.getTransactionStatus(
+    transaction.transaction_hash
+  );
 }

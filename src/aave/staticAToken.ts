@@ -12,7 +12,7 @@ import { getStaticATokenContract } from "../utils/contracts";
 
 /**
  * @param l2_token the staticAToken address on Starknet
- * @param provider
+ * @param provider Starknet provider
  */
 export async function getStaticATokenData(
   l2_token: string,
@@ -62,54 +62,47 @@ export async function getUserInfo(
 }
 
 /**
- * @dev this function withdraws staticATokens on l2 and bridges them back to their corresponding l1 aTokens
- * @param StarknetWallet the connected starknet wallet provided by get-starknet package
- * @param l2_token the staticAToken address on Starknet
+ * @dev this function allows Starknet users to claim their rewards token (rewAAVE token) by holding staticAToken on L2
+ * @param Starknet the window object provided by the installed wallet extension
+ * @param l2_token the staticAToken address
  * @param recipient of rewards tokens
  */
 export async function claimRewards(
-  StarknetWallet: IStarknetWindowObject,
+  Starknet: IStarknetWindowObject,
   l2_token: string,
   recipient: string
 ): Promise<GetTransactionStatusResponse> {
-  const staticAToken = getStaticATokenContract(
-    l2_token,
-    StarknetWallet.provider
-  );
-  staticAToken.connect(StarknetWallet.account);
+  const staticAToken = getStaticATokenContract(l2_token, Starknet.provider);
+  staticAToken.connect(Starknet.account);
 
-  const { transaction_hash: claimTxHash } = await staticAToken.claim_rewards(
-    number.toBN(recipient)
-  );
+  const tx = await staticAToken.claim_rewards(number.toBN(recipient));
 
-  await waitForTransaction(claimTxHash, StarknetWallet);
-  return getTransactionStatus(claimTxHash, StarknetWallet);
+  await waitForTransaction(tx, Starknet);
+  return getTransactionStatus(tx, Starknet);
 }
 
 /**
- * @dev this function allows anyone to push
- * @param StarknetWallet the connected starknet wallet provided by get-starknet package
+ * @dev this function allows anyone to update the reward index of any staticAtoken on l2
+ * @param Starknet the window object provided by the installed wallet extension
  * @param index of rewards
  */
 export async function updateRewardsIndex(
-  StarknetWallet: IStarknetWindowObject,
+  Starknet: IStarknetWindowObject,
   l2_token: string,
   blockNumber: string,
   index: string
 ): Promise<GetTransactionStatusResponse> {
-  const staticAToken = getStaticATokenContract(
-    l2_token,
-    StarknetWallet.provider
+  const staticAToken = getStaticATokenContract(l2_token, Starknet.provider);
+
+  staticAToken.connect(Starknet.account);
+
+  const tx = await staticAToken.push_rewards_index(
+    uint256.bnToUint256(blockNumber),
+    {
+      wad: uint256.bnToUint256(index),
+    }
   );
 
-  staticAToken.connect(StarknetWallet.account);
-
-  const {
-    transaction_hash: pushRewardsIndexTxHash,
-  } = await staticAToken.push_rewards_index(uint256.bnToUint256(blockNumber), {
-    wad: uint256.bnToUint256(index),
-  });
-
-  await waitForTransaction(pushRewardsIndexTxHash, StarknetWallet);
-  return getTransactionStatus(pushRewardsIndexTxHash, StarknetWallet);
+  await waitForTransaction(tx, Starknet);
+  return getTransactionStatus(tx, Starknet);
 }
