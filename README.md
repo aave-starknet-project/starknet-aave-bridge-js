@@ -1,7 +1,9 @@
 # starknet-aave-bridge.js
 
 
-The starknet-aave-bridge.js package gives developers access to methods for interacting with the AAVE bridge & staticATokens on Starknet using StarkNet wallets & [Starknet.js](https://github.com/0xs34n/starknet.js).
+The starknet-aave-bridge.js package gives developers access to methods for interacting with the AAVE bridge & staticATokens on Starknet using StarkNet wallets,  [Starknet.js](https://github.com/0xs34n/starknet.js) & [TypeChain](https://github.com/dethcrypto/TypeChain).
+
+
 
 Install starknet-aave-bridge-js with `npm`
 
@@ -16,7 +18,7 @@ import {getStarknet} from "get-starknet";
 import {withdraw} from "@starknet-aave-bridge-js";
 
 export const handleWithdraw=async (
-  l2_token: bigint,
+  l2_token: string,
   l1_recipient: string,
   amount: string
 ): Promise<any> => {
@@ -41,26 +43,30 @@ const contract = getBridgeContract();
 
 ### withdraw
 Withdraws staticATokens from l2 and bridges them back to their corresponding l1 aTokens
- * @param `StarknetWallet` the connected starknet wallet provided by the get-starknet package
+ * @param `Starknet` the window object provided by the installed wallet extension
  * @param `l2_token` the staticAToken address on Starknet
  * @param `l1_recipient` the l1 recipient address
  * @param  `amount` to withdraw
 ```typescript
 import {withdraw} from "@starknet-aave-bridge-js";
-...
+
+const starknet=getStarknet();
 const tx= await withdraw(starknet, l2_token, l1_recipient, amount);
 ```
 ### bridgeRewards
 
 Allows users to bridge their `rewAave` tokens and receive rewards on l1.
- * @param `StarknetWallet` 
+ * @param `Starknet` the window object provided by the installed wallet extension
  * @param `l1_recipient` the l1 recipient address
  * @param `amount` to be bridged
+ * @return transaction status
 
 ```typescript
+import {getStarknet} from "get-starknet";
 import {bridgeRewards} from "@starknet-aave-bridge-js";
-...
-const tx= await bridgeRewards(wallet, l1_recipient, amount);
+
+const starknet=getStarknet();
+const tx= await bridgeRewards(starknet, l1_recipient, amount);
 ```
 
 ## StaticATokens
@@ -68,23 +74,26 @@ const tx= await bridgeRewards(wallet, l1_recipient, amount);
 
 ### getStaticATokenContract
 
-Returns a staticAToken contract instance
+ * @param contract address
+ * @param Starknet provider
+ * @return a staticAToken contract instance
 
 ```typescript
-
-
- const contract = getStaticATokenContract(aDai.address);
+const contract = getStaticATokenContract(aDai.address);
 ```
 
 ### claim rewards (rewAave):
-Claims user pending rewards on a given `staticAToken.
+Claim user pending rewards token (rewAAVE - ERC20 representing Aave reward token on L2) by holding a `staticAToken` on L2
  * @param `StarknetWallet` the connected Starknet wallet 
  * @param `l2_token` the staticAToken address on Starknet
  * @param `recipient` of rewards tokens
+ * @return transaction status
+  
 ```typescript
 import {claimRewards} from "@starknet-aave-bridge-js";
-...
+import {getStarknet} from "get-starknet";
 
+const starknet=getStarknet();
 const tx=await claimRewards(starknet, l2_token, recipient);
 ```
 
@@ -92,24 +101,31 @@ const tx=await claimRewards(starknet, l2_token, recipient);
 
 Gets token totalSupply, last rewards index update & current_rewards_index.
  * @param `l2_token` the staticAToken address on Starknet
- * @param `provider`  ( defaulted to Alpha testnet if not provided)
+ * @param `provider`  Starknet provider
+ * @return totalSupply, last_rewards_index_blocknumber & current_rewards_index
 
 ```typescript
 import {getStaticATokenData} from "@starknet-aave-bridge-js";
-...
-const data=await getStaticATokenData(aDAI.address, provider);// returns totalSupply, last_rewards_index_blocknumber & current_rewards_index
+import {getStarknet} from "get-starknet";
+
+const starknet=getStarknet();
+const data=await getStaticATokenData(aDAI.address, straknet.provider);
  ```
 
 ### getUserInfo
 Gets user data related to a specific `staticAToken`
 
- * @param `l2_token` the staticAToken address on Starknet
- * @param `user` address
- * @param `provider` ( defaulted to Alpha testnet if not provided)
+ * @param `l2_token` the staticAToken address
+ * @param `user` l2 user address
+ * @param `provider` Starknet provider
+ * @return balance, user's pending rewards & latest claimed rewards index (snapshot)
 
 ```typescript
 import {getUserInfo} from "@starknet-aave-bridge-js";
-...
-const data=await getUserInfo(aDAI.address, l2_user_address, provider);// returns balance, user's pending rewards & latest claimed rewards index (snapshot)
+import {getStarknet} from "get-starknet";
+
+const starknet=getStarknet();
+const data=await getUserInfo(aDAI.address, l2_user_address, provider)
 ```
+
 

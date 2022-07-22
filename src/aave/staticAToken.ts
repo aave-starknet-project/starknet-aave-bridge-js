@@ -80,29 +80,3 @@ export async function claimRewards(
   await waitForTransaction(tx, Starknet);
   return getTransactionStatus(tx, Starknet);
 }
-
-/**
- * @dev this function allows anyone to update the reward index of any staticAtoken on l2
- * @param Starknet the window object provided by the installed wallet extension
- * @param index of rewards
- */
-export async function updateRewardsIndex(
-  Starknet: IStarknetWindowObject,
-  l2_token: string,
-  blockNumber: string,
-  index: string
-): Promise<GetTransactionStatusResponse> {
-  const staticAToken = getStaticATokenContract(l2_token, Starknet.provider);
-
-  staticAToken.connect(Starknet.account);
-
-  const tx = await staticAToken.push_rewards_index(
-    uint256.bnToUint256(blockNumber),
-    {
-      wad: uint256.bnToUint256(index),
-    }
-  );
-
-  await waitForTransaction(tx, Starknet);
-  return getTransactionStatus(tx, Starknet);
-}
