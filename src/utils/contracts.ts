@@ -13,9 +13,8 @@ function loadContract<C extends Contract>(
 }
 
 export function getBridgeContract(provider: Provider): bridge {
-  const abi: Abi = <Abi>bridge_abi.abi;
   const bridgeContract: bridge = loadContract(
-    abi,
+    <Abi>bridge_abi.abi,
     starknetBridgeContractAddress,
     provider
   );
@@ -27,9 +26,8 @@ export function getStaticATokenContract(
   address: string,
   provider: Provider
 ): staticAToken {
-  const abi: Abi = <Abi>staticAToken_abi.abi;
   const staticATokenContract: staticAToken = loadContract(
-    abi,
+    <Abi>staticAToken_abi.abi,
     address,
     provider
   );

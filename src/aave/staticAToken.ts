@@ -11,14 +11,14 @@ import { getTransactionStatus, waitForTransaction } from "../utils/tx";
 import { getStaticATokenContract } from "../utils/contracts";
 
 /**
- * @param l2_token the staticAToken address on Starknet
+ * @param l2Token the staticAToken address on Starknet
  * @param provider Starknet provider
  */
 export async function getStaticATokenData(
-  l2_token: string,
+  l2Token: string,
   provider: Provider
 ): Promise<tokenData> {
-  const staticAToken = getStaticATokenContract(l2_token, provider);
+  const staticAToken = getStaticATokenContract(l2Token, provider);
   const data = await Promise.all([
     staticAToken.totalSupply(),
     staticAToken.get_last_update(),
@@ -38,16 +38,16 @@ export async function getStaticATokenData(
 }
 
 /**
- * @param l2_token the staticAToken address on Starknet
+ * @param l2Token the staticAToken address on Starknet
  * @param user address
  * @param provider
  */
 export async function getUserInfo(
-  l2_token: string,
+  l2Token: string,
   user: string,
   provider: Provider
 ): Promise<userInfo> {
-  const staticAToken = getStaticATokenContract(l2_token, provider);
+  const staticAToken = getStaticATokenContract(l2Token, provider);
 
   const data = await Promise.all([
     staticAToken.balanceOf(user),
@@ -64,15 +64,15 @@ export async function getUserInfo(
 /**
  * @dev this function allows Starknet users to claim their rewards token (rewAAVE token) by holding staticAToken on L2
  * @param Starknet the window object provided by the installed wallet extension
- * @param l2_token the staticAToken address
+ * @param l2Token the staticAToken address
  * @param recipient of rewards tokens
  */
 export async function claimRewards(
   Starknet: IStarknetWindowObject,
-  l2_token: string,
+  l2Token: string,
   recipient: string
 ): Promise<GetTransactionStatusResponse> {
-  const staticAToken = getStaticATokenContract(l2_token, Starknet.provider);
+  const staticAToken = getStaticATokenContract(l2Token, Starknet.provider);
   staticAToken.connect(Starknet.account);
 
   const tx = await staticAToken.claim_rewards(number.toBN(recipient));
