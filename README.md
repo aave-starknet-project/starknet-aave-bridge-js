@@ -20,14 +20,15 @@ import {withdraw} from "@starknet-aave-bridge-js";
 export const handleWithdraw=async (
   l2_token: string,
   l1_recipient: string,
-  amount: string
+  amount: string,
+  to_underlying_asset: string,
 ): Promise<any> => {
 
     const starknet=getStarknet();
     //connect wallet
     await starknet.enable();
 
-    const tx= await withdraw(starknet, l2_token, l1_recipient, amount);
+    const tx= await withdraw(starknet, l2_token, l1_recipient, amount, to_underlying_asset);
   
   
 }
@@ -47,11 +48,13 @@ Withdraws staticATokens from l2 and bridges them back to their corresponding l1 
  * @param `l2_token` the staticAToken address on Starknet
  * @param `l1_recipient` the l1 recipient address
  * @param  `amount` to withdraw
+ * @param `to_underlying_asset`  if set to `1` will withdraw underlying asset tokens from pool and transfer them to recipient on l1. If set to `0` will withdraw aTokens to l1 recipient.
+
 ```typescript
 import {withdraw} from "@starknet-aave-bridge-js";
 
 const starknet=getStarknet();
-const tx= await withdraw(starknet, l2_token, l1_recipient, amount);
+const tx= await withdraw(starknet, l2_token, l1_recipient, amount, to_underlying_asset);
 ```
 ### bridgeRewards
 
