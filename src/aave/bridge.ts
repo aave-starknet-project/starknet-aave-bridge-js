@@ -1,5 +1,5 @@
 import { IStarknetWindowObject } from "get-starknet";
-import { GetTransactionStatusResponse, uint256 } from "starknet";
+import { GetTransactionStatusResponse, number, uint256 } from "starknet";
 import { bridge } from "../generated/contracts";
 import { getBridgeContract } from "../utils/contracts";
 import { getTransactionStatus, waitForTransaction } from "../utils/tx";
@@ -15,14 +15,16 @@ export async function withdraw(
   Starknet: IStarknetWindowObject,
   l2Token: string,
   l1Recipient: string,
-  amount: string
+  amount: string,
+  to_underlying_asset: string
 ): Promise<GetTransactionStatusResponse> {
   const bridgeContract: bridge = getBridgeContract(Starknet.provider);
 
   const tx = await bridgeContract.initiate_withdraw(
     l2Token,
     l1Recipient,
-    uint256.bnToUint256(amount)
+    uint256.bnToUint256(amount),
+    to_underlying_asset
   );
 
   await waitForTransaction(tx, Starknet);
